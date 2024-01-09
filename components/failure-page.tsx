@@ -10,8 +10,8 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import LinksTextarea from "./links-textarea";
-import CreatePlaylistButton from "./create-playlist-button";
+import TextareaLinks from "./textarea-links";
+import ButtonCreatePlaylist from "./button-create-playlist";
 import { useDispatch } from "react-redux";
 import { AppDispatch, useAppSelector } from "@/app/(state)/store";
 import {
@@ -19,7 +19,7 @@ import {
   updateStatus,
 } from "@/app/(state)/(slices)/playlist-creator-slice";
 
-const CustomAlertDialog = () => {
+const FailurePage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const status = useAppSelector(
     (state) => state.playlistCreatorReducer.value.applicationStatus
@@ -34,10 +34,10 @@ const CustomAlertDialog = () => {
       onOpenChange={() => dispatch(updateStatus(ApplicationStatus.Fresh))}
     >
       <div className="m-2">
-        <div className="grid md:grid-cols-10 lg:grid-cols-9 space-y-2">
-          <LinksTextarea />
+        <div className="grid md:grid-cols-10 space-y-2">
+          <TextareaLinks />
           <AlertDialogTrigger asChild>
-            <CreatePlaylistButton />
+            <ButtonCreatePlaylist />
           </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>
@@ -54,4 +54,4 @@ const CustomAlertDialog = () => {
   );
 };
 
-export default CustomAlertDialog;
+export default FailurePage;

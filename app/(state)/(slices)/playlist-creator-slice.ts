@@ -11,7 +11,6 @@ export enum ApplicationStatus {
 interface PlaylistCreatorState {
   value: {
     textAreaValue: string;
-    previousTextareaValue: string;
     playlistLink: string;
     errorMessage: string;
     applicationStatus: ApplicationStatus;
@@ -21,7 +20,6 @@ interface PlaylistCreatorState {
 const initialState: PlaylistCreatorState = {
   value: {
     textAreaValue: "",
-    previousTextareaValue: "",
     playlistLink: "",
     errorMessage: "",
     applicationStatus: ApplicationStatus.Fresh,
@@ -34,7 +32,6 @@ export const playlistCreator = createSlice({
   reducers: {
     updateTextareaValue: (state, action: PayloadAction<string>) => {
       state.value.textAreaValue = action.payload;
-      state.value.previousTextareaValue = action.payload;
     },
 
     updatePlaylistLink: (state, action: PayloadAction<string>) => {

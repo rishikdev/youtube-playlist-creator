@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { updateTextareaValue } from "@/app/(state)/(slices)/playlist-creator-slice";
 import { AppDispatch, useAppSelector } from "@/app/(state)/store";
 
-const LinksTextarea = () => {
+const TextareaLinks = () => {
   const dispatch = useDispatch<AppDispatch>();
   const textareaValue = useAppSelector(
     (state) => state.playlistCreatorReducer.value.textAreaValue
@@ -17,7 +17,6 @@ const LinksTextarea = () => {
 
   return (
     <Textarea
-      id="linksTA"
       placeholder="Paste upto 50 video links each on a new line here..."
       className="h-56 text-lg md:text-sm md:col-start-4 md:col-span-4"
       value={textareaValue}
@@ -26,4 +25,4 @@ const LinksTextarea = () => {
   );
 };
 
-export default LinksTextarea;
+export default TextareaLinks;

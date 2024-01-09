@@ -14,7 +14,7 @@ import { Button } from "./ui/button";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { Copy, ExternalLink, XSquare } from "lucide-react";
-import CreatePlaylistButton from "./create-playlist-button";
+import ButtonCreatePlaylist from "./button-create-playlist";
 import { toast } from "sonner";
 import { AppDispatch, useAppSelector } from "@/app/(state)/store";
 import {
@@ -22,21 +22,31 @@ import {
   updateStatus,
 } from "@/app/(state)/(slices)/playlist-creator-slice";
 import { useDispatch } from "react-redux";
-import LinksTextarea from "./links-textarea";
+import TextareaLinks from "./textarea-links";
 
-const SuccessDialog = () => {
+const FreshOrSuccessPage = () => {
   const playlistLink = useAppSelector(
     (state) => state.playlistCreatorReducer.value.playlistLink
   );
 
   function copyPlaylistLink() {
-    navigator.clipboard.writeText(playlistLink);
-    toast("Link copied to clipboard!", {
-      action: {
-        label: "Dismiss",
-        onClick: () => {},
-      },
-    });
+    try {
+      navigator.clipboard.writeText(playlistLink);
+
+      toast.success("Link copied to clipboard", {
+        action: {
+          label: "Dismiss",
+          onClick: () => {},
+        },
+      });
+    } catch (error) {
+      toast.error("Could not copy link to clipboard", {
+        action: {
+          label: "Dismiss",
+          onClick: () => {},
+        },
+      });
+    }
   }
 
   const dispatch = useDispatch<AppDispatch>();
@@ -53,9 +63,9 @@ const SuccessDialog = () => {
     >
       <div className="m-2">
         <div className="grid md:grid-cols-10 space-y-2">
-          <LinksTextarea />
+          <TextareaLinks />
           <DialogTrigger asChild>
-            <CreatePlaylistButton />
+            <ButtonCreatePlaylist />
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
@@ -103,4 +113,4 @@ const SuccessDialog = () => {
   );
 };
 
-export default SuccessDialog;
+export default FreshOrSuccessPage;
