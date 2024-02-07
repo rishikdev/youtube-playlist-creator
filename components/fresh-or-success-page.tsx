@@ -29,9 +29,26 @@ const FreshOrSuccessPage = () => {
     (state) => state.playlistCreatorReducer.value.playlistLink
   );
 
-  function copyPlaylistLink() {
+  const embeddedPlaylistLink = useAppSelector(
+    (state) => state.playlistCreatorReducer.value.embeddedPlaylistLink
+  );
+
+  const links = [
+    {
+      playlistType: "Normal",
+      remarks: "",
+      url: playlistLink,
+    },
+    {
+      playlistType: "Embedded",
+      remarks: "May not work on desktop browsers",
+      url: embeddedPlaylistLink,
+    },
+  ];
+
+  function copyPlaylistLink(link: string) {
     try {
-      navigator.clipboard.writeText(playlistLink);
+      navigator.clipboard.writeText(link);
 
       toast.success("Link copied to clipboard", {
         action: {
@@ -69,43 +86,36 @@ const FreshOrSuccessPage = () => {
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Playlist Link</DialogTitle>
-              <DialogDescription>
-                Paste this link in a new tab to start watching the videos!
-              </DialogDescription>
+              <DialogTitle>Playlist Links</DialogTitle>
             </DialogHeader>
-            <div className="flex items-center space-x-2">
-              <div className="grid flex-1 gap-2">
-                <Label htmlFor="link" className="sr-only">
-                  Link
-                </Label>
-                <Input id="link" defaultValue={playlistLink} readOnly />
-              </div>
-              <Button
-                type="submit"
-                size="sm"
-                className="px-3"
-                onClick={copyPlaylistLink}
-              >
-                <span className="sr-only"></span>
-                <Copy className="h-4 w-4" />
-              </Button>
+            <div className="grid gap-5">
+              {links.map((link) => (
+                <div className="grid-rows-2">
+                  <p className="text-sm opacity-50 row-start-1 row-span-1">
+                    {link.playlistType}
+                  </p>
+                  <div className="flex gap-2 items-center row-start-2 row-span-1">
+                    <div className="flex-1">
+                      <Input id="link" defaultValue={link.url} readOnly />
+                    </div>
+                    <Button
+                      size="sm"
+                      variant="secondary"
+                      onClick={() => copyPlaylistLink(link.url)}
+                    >
+                      <Copy className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="secondary"
+                      onClick={() => window.open(link.url, "_blank")}
+                    >
+                      <ExternalLink className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+              ))}
             </div>
-            <DialogFooter className="grid grid-cols-2 gap-4 justify-between">
-              <Button
-                variant="secondary"
-                onClick={() => window.open(playlistLink, "_blank")}
-              >
-                <ExternalLink className="hidden md:flex h-4 w-4 mr-3" />
-                Open in a new tab
-              </Button>
-              <DialogClose asChild>
-                <Button type="button" variant="destructive">
-                  <XSquare className="hidden md:flex h-4 w-4 mr-3" />
-                  Close
-                </Button>
-              </DialogClose>
-            </DialogFooter>
           </DialogContent>
         </div>
       </div>

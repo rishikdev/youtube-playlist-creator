@@ -18,7 +18,7 @@ const TextareaLinks = () => {
   return (
     <Textarea
       placeholder="Paste upto 50 YouTube video links here..."
-      className="h-56 text-lg md:text-sm md:col-start-4 md:col-span-4"
+      className="min-h-96 text-lg md:text-sm md:col-start-4 md:col-span-4"
       value={textareaValue}
       onChange={(e) => handleOnChange(e.target.value)}
     />

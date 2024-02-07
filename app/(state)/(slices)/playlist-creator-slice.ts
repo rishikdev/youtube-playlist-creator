@@ -12,6 +12,7 @@ interface PlaylistCreatorState {
   value: {
     textAreaValue: string;
     playlistLink: string;
+    embeddedPlaylistLink: string;
     errorMessage: string;
     applicationStatus: ApplicationStatus;
   };
@@ -21,6 +22,7 @@ const initialState: PlaylistCreatorState = {
   value: {
     textAreaValue: "",
     playlistLink: "",
+    embeddedPlaylistLink: "",
     errorMessage: "",
     applicationStatus: ApplicationStatus.Fresh,
   },
@@ -38,6 +40,10 @@ export const playlistCreator = createSlice({
       state.value.playlistLink = action.payload;
     },
 
+    updateEmbeddedPlaylistLink: (state, action: PayloadAction<string>) => {
+      state.value.embeddedPlaylistLink = action.payload;
+    },
+
     updateStatus: (state, action: PayloadAction<ApplicationStatus>) => {
       state.value.applicationStatus = action.payload;
     },
@@ -51,6 +57,7 @@ export const playlistCreator = createSlice({
 export const {
   updateTextareaValue,
   updatePlaylistLink,
+  updateEmbeddedPlaylistLink,
   updateStatus,
   updateErrorMessage,
 } = playlistCreator.actions;

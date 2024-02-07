@@ -8,6 +8,7 @@ import {
   updateErrorMessage,
   updateStatus,
   ApplicationStatus,
+  updateEmbeddedPlaylistLink,
 } from "@/app/(state)/(slices)/playlist-creator-slice";
 
 const ButtonCreatePlaylist = () => {
@@ -60,6 +61,7 @@ const ButtonCreatePlaylist = () => {
 
   function handleOnClick() {
     const prefix = "https://www.youtube.com/watch_videos?video_ids=";
+    const prefixEmbedded = "http://www.youtube.com/embed/?playlist=";
 
     var videos = linksTextareaValue
       .trim()
@@ -93,12 +95,13 @@ const ButtonCreatePlaylist = () => {
     if (!hasError) {
       dispatch(updateStatus(ApplicationStatus.NoError));
       dispatch(updatePlaylistLink(prefix + videoIds.join(",")));
+      dispatch(updateEmbeddedPlaylistLink(prefixEmbedded + videoIds.join(",")));
     }
   }
 
   return (
     <Button
-      className="cursor-pointer md:col-start-4 md:col-span-4"
+      className="cursor-pointer text-lg md:text-sm md:col-start-4 md:col-span-4"
       onClick={handleOnClick}
       disabled={linksTextareaValue.trim().length == 0}
     >
